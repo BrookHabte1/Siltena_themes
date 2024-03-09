@@ -1,0 +1,168 @@
+<%page expression_filter="h"/>
+<%inherit file="main.html" />
+<%namespace name='static' file='static_content.html'/>
+<%!
+from django.utils.translation import gettext as _
+from django.urls import reverse
+
+from openedx.core.djangolib.markup import HTML, Text
+%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<!-- Home page background start -->
+<section class="container-home-page">
+  <div class="container-fluid">
+    <div class="container ms-0 pb-5">
+      <div class="container ms-5 justify-content-center">
+        <div class="row align-items-center">
+          <div class="col pe-5">
+            <span class="fw-bold d-none d-md-inline" style="font-size: 60px; line-height: 70px; color: white">Live
+              like <br class="" />
+              there is no box.</span>
+            <span class="fw-bold d-md-none" style="font-size: 40px; color: white">
+              Live like<br class="" />
+              there is no box.
+            </span>
+            <div class="col pe-5">
+              <form class="d-flex align-items-center mt-2" role="search" method="get" action="/courses">
+                <input class="form-control rounded-0 home-page-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
+                <button class="btn text-light rounded-0" type="submit" 
+                  style="
+                    color: #fff;
+                    background: #8dcc2c;
+                    background-color: #8dcc2c;
+                    border-color: #8dcc2c;
+                    z-index: 1;"
+                >
+                  
+                ${_("Search")}
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="col text-start d-none d-md-inline">
+            <img class="udemy-business-photo" 
+              src="${static.url("images/siltena character.svg")}" alt="udemy business image"
+              style="height: 550px; margin-left: -20%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Home page background end -->
+
+  <!-- Logo stack -->
+  <section class="light-container">
+    <div class="container-fluid-md mb-5 p-3">
+      <div class="row  trusted-logo-image text-center mt-2 mb-2 p-3">
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/logo-porsche2.svg")}" alt="volkswagen-logo" style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/samsung.svg")}" alt="samsung-logo" style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/cisco-2.svg")}" alt="cisco-logo" style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/at-t-logo-2016.svg")}" alt="at-t-logo" style="height: 50px" />
+        </div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/eneos-logo.svg")}" alt="procter-gamble-logo"
+            style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/hewlett-packard-enterprise-logo.svg")}"
+            alt="hewlett-packard-enterprise-logo" style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/citi-2.svg")}" alt="citi-logo" style="height: 50px" /></div>
+        <div class="col mt-md-3 mt-3 w-md-50 w-50"><img class="ms-md-5" src="${static.url("images/ericsson-logo.svg")}" alt="ericsson-logo" style="height: 50px" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Logo stack end -->
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="home style-logout">
+      <header>
+        <div class="outer-wrapper">
+          <div class="title">
+            <div class="heading-group">
+              % if homepage_overlay_html:
+                ${homepage_overlay_html | n, decode.utf8}
+              % else:
+                <%include file="index_overlay.html" />
+              % endif
+            </div>
+            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
+              <div class="course-search">
+                <form method="get" action="/courses">
+                  <!-- UPDATE IN INDIGO2.1 - Change the structure for search bar  -->
+                  <div class="search-field-wrapper">
+                    <div class="button-holder">
+                      <button class="search-button button-green" type="submit"
+                      >
+                        ${_("Search")}
+                      </button>
+                    </div>
+                    <label class="input-holder"><span class="sr">${_("Search for a course")}</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4ZM2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8C14 9.29583 13.5892 10.4957 12.8907 11.4765L17.7071 16.2929C18.0976 16.6834 18.0976 17.3166 17.7071 17.7071C17.3166 18.0976 16.6834 18.0976 16.2929 17.7071L11.4765 12.8907C10.4957 13.5892 9.29583 14 8 14C4.68629 14 2 11.3137 2 8Z" fill="#9CA3AF"></path>
+                        </svg>
+                      <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
+                    </label>
+                  </div>
+                </form>
+              </div>
+            % endif
+
+          </div>
+
+          <%include file="index_promo_video.html" />
+        </div>
+
+      </header>
+      <%include file="${courses_list}" />
+
+    </section>
+</main>
+
+% if show_homepage_promo_video:
+  <section id="video-modal" class="modal home-page-video-modal video-modal">
+    <div class="inner-wrapper">
+      <iframe title="YouTube Video" width="640" height="360" src="//www.youtube.com/embed/${homepage_promo_video_youtube_id}?showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+% endif
+
+<%block name="js_extra">
+   <script type="text/javascript">
+      $(window).load(function() {
+         if(getParameterByName('next')) {
+              $('#login').trigger("click");
+         }
+      })
+   </script>
+</%block>
+
+% if show_signup_immediately is not UNDEFINED:
+  ## NOTE: This won't work in production, because anonymous views are cached, so it will
+  ## show either with or without this extra js for 3 minutes at a time.
+<script type="text/javascript">
+  $(window).load(function() {$('#signup_action').trigger("click");});
+</script>
+% endif
+
+<style>
+
+.container-home-page {
+  background-color: #088080;
+  top: 0px;
+}
+
+
+.light-container {
+  background-color: #f8f8f8;
+}
+
+.home-page-input {
+  border-color: #8dcc2c;
+}
+
+.home-page-input:focus {
+  border-color: #8dcc2c;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
